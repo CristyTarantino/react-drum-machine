@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, CSSProperties} from 'react';
 import './App.scss';
 import PadBank from "./components/PadBank";
+import { faFreeCodeCamp } from "@fortawesome/free-brands-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const bankOne = [{
     keyCode: 81,
@@ -124,10 +126,8 @@ function App() {
         }
     };
 
-    const displayClipName = (name: any) => {
-        if (power) {
-            setDisplay(name)
-        }
+    const displayClipName = (name: string) => {
+        power && setDisplay(name)
     };
 
     const adjustVolume = (e: any) => {
@@ -142,33 +142,33 @@ function App() {
         setDisplay(String.fromCharCode(160))
     };
 
-    const powerSlider = power ? {
+    const powerSlider: CSSProperties = power ? {
         float: 'right'
     } : {
         float: 'left'
     };
-    const bankSlider = currentPadBank === bankOne ? {
+
+    const bankSlider: CSSProperties = currentPadBank === bankOne ? {
         float: 'left'
     } : {
         float: 'right'
     };
-    {
-        const clips = [].slice.call(document.getElementsByClassName('clip'));
-        clips.forEach(sound => {
-            sound.volume = sliderVal
-        });
-    }
+
+    const clips = [].slice.call(document.getElementsByClassName('clip'));
+    clips.forEach(sound => {
+        // @ts-ignore
+        sound.volume = sliderVal
+    });
+
     return (
         <div id="drum-machine" className="inner-container">
             <PadBank
                 power={power}
                 updateDisplay={displayClipName}
-                clipVolume={sliderVal}
                 currentPadBank={currentPadBank}/>
-
             <div className="logo">
                 <div className="inner-logo ">{'FCC' + String.fromCharCode(160)}</div>
-                <i className="inner-logo fa fa-free-code-camp"/>
+                <FontAwesomeIcon icon={faFreeCodeCamp} size="lg"  />
             </div>
 
             <div className="controls-container">
